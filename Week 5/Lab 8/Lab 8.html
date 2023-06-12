@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 8</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Lab 8_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Lab 8_files/libs/quarto-html/quarto.js"></script>
+<script src="Lab 8_files/libs/quarto-html/popper.min.js"></script>
+<script src="Lab 8_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Lab 8_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Lab 8_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Lab 8_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Lab 8_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Lab 8_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Lab 8_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 8</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>#Breast Cancer Project Today we are going to explore some data from the Univeristy of Wisconsin Cancer Center on Breast biosy data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wisc.data <span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"/Users/JoshTran/Desktop/BIMM 143/Week 5/WisconsinCancer.csv"</span>, <span class="at">row.name =</span> <span class="dv">1</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wisc.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         diagnosis radius_mean texture_mean perimeter_mean area_mean
+842302           M       17.99        10.38         122.80    1001.0
+842517           M       20.57        17.77         132.90    1326.0
+84300903         M       19.69        21.25         130.00    1203.0
+84348301         M       11.42        20.38          77.58     386.1
+84358402         M       20.29        14.34         135.10    1297.0
+843786           M       12.45        15.70          82.57     477.1
+         smoothness_mean compactness_mean concavity_mean concave.points_mean
+842302           0.11840          0.27760         0.3001             0.14710
+842517           0.08474          0.07864         0.0869             0.07017
+84300903         0.10960          0.15990         0.1974             0.12790
+84348301         0.14250          0.28390         0.2414             0.10520
+84358402         0.10030          0.13280         0.1980             0.10430
+843786           0.12780          0.17000         0.1578             0.08089
+         symmetry_mean fractal_dimension_mean radius_se texture_se perimeter_se
+842302          0.2419                0.07871    1.0950     0.9053        8.589
+842517          0.1812                0.05667    0.5435     0.7339        3.398
+84300903        0.2069                0.05999    0.7456     0.7869        4.585
+84348301        0.2597                0.09744    0.4956     1.1560        3.445
+84358402        0.1809                0.05883    0.7572     0.7813        5.438
+843786          0.2087                0.07613    0.3345     0.8902        2.217
+         area_se smoothness_se compactness_se concavity_se concave.points_se
+842302    153.40      0.006399        0.04904      0.05373           0.01587
+842517     74.08      0.005225        0.01308      0.01860           0.01340
+84300903   94.03      0.006150        0.04006      0.03832           0.02058
+84348301   27.23      0.009110        0.07458      0.05661           0.01867
+84358402   94.44      0.011490        0.02461      0.05688           0.01885
+843786     27.19      0.007510        0.03345      0.03672           0.01137
+         symmetry_se fractal_dimension_se radius_worst texture_worst
+842302       0.03003             0.006193        25.38         17.33
+842517       0.01389             0.003532        24.99         23.41
+84300903     0.02250             0.004571        23.57         25.53
+84348301     0.05963             0.009208        14.91         26.50
+84358402     0.01756             0.005115        22.54         16.67
+843786       0.02165             0.005082        15.47         23.75
+         perimeter_worst area_worst smoothness_worst compactness_worst
+842302            184.60     2019.0           0.1622            0.6656
+842517            158.80     1956.0           0.1238            0.1866
+84300903          152.50     1709.0           0.1444            0.4245
+84348301           98.87      567.7           0.2098            0.8663
+84358402          152.20     1575.0           0.1374            0.2050
+843786            103.40      741.6           0.1791            0.5249
+         concavity_worst concave.points_worst symmetry_worst
+842302            0.7119               0.2654         0.4601
+842517            0.2416               0.1860         0.2750
+84300903          0.4504               0.2430         0.3613
+84348301          0.6869               0.2575         0.6638
+84358402          0.4000               0.1625         0.2364
+843786            0.5355               0.1741         0.3985
+         fractal_dimension_worst
+842302                   0.11890
+842517                   0.08902
+84300903                 0.08758
+84348301                 0.17300
+84358402                 0.07678
+843786                   0.12440</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q1. How many patients samples are in this dataset?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(wisc.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 569</code></pre>
+</div>
+</div>
+<p>There are 569 patients in this data set.</p>
+<blockquote class="blockquote">
+<p>Q2. How many cancer (M) and non cancer (B) samples are there?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(wisc.data<span class="sc">$</span>diagnosis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  B   M 
+357 212 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wisc.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         diagnosis radius_mean texture_mean perimeter_mean area_mean
+842302           M       17.99        10.38         122.80    1001.0
+842517           M       20.57        17.77         132.90    1326.0
+84300903         M       19.69        21.25         130.00    1203.0
+84348301         M       11.42        20.38          77.58     386.1
+84358402         M       20.29        14.34         135.10    1297.0
+843786           M       12.45        15.70          82.57     477.1
+         smoothness_mean compactness_mean concavity_mean concave.points_mean
+842302           0.11840          0.27760         0.3001             0.14710
+842517           0.08474          0.07864         0.0869             0.07017
+84300903         0.10960          0.15990         0.1974             0.12790
+84348301         0.14250          0.28390         0.2414             0.10520
+84358402         0.10030          0.13280         0.1980             0.10430
+843786           0.12780          0.17000         0.1578             0.08089
+         symmetry_mean fractal_dimension_mean radius_se texture_se perimeter_se
+842302          0.2419                0.07871    1.0950     0.9053        8.589
+842517          0.1812                0.05667    0.5435     0.7339        3.398
+84300903        0.2069                0.05999    0.7456     0.7869        4.585
+84348301        0.2597                0.09744    0.4956     1.1560        3.445
+84358402        0.1809                0.05883    0.7572     0.7813        5.438
+843786          0.2087                0.07613    0.3345     0.8902        2.217
+         area_se smoothness_se compactness_se concavity_se concave.points_se
+842302    153.40      0.006399        0.04904      0.05373           0.01587
+842517     74.08      0.005225        0.01308      0.01860           0.01340
+84300903   94.03      0.006150        0.04006      0.03832           0.02058
+84348301   27.23      0.009110        0.07458      0.05661           0.01867
+84358402   94.44      0.011490        0.02461      0.05688           0.01885
+843786     27.19      0.007510        0.03345      0.03672           0.01137
+         symmetry_se fractal_dimension_se radius_worst texture_worst
+842302       0.03003             0.006193        25.38         17.33
+842517       0.01389             0.003532        24.99         23.41
+84300903     0.02250             0.004571        23.57         25.53
+84348301     0.05963             0.009208        14.91         26.50
+84358402     0.01756             0.005115        22.54         16.67
+843786       0.02165             0.005082        15.47         23.75
+         perimeter_worst area_worst smoothness_worst compactness_worst
+842302            184.60     2019.0           0.1622            0.6656
+842517            158.80     1956.0           0.1238            0.1866
+84300903          152.50     1709.0           0.1444            0.4245
+84348301           98.87      567.7           0.2098            0.8663
+84358402          152.20     1575.0           0.1374            0.2050
+843786            103.40      741.6           0.1791            0.5249
+         concavity_worst concave.points_worst symmetry_worst
+842302            0.7119               0.2654         0.4601
+842517            0.2416               0.1860         0.2750
+84300903          0.4504               0.2430         0.3613
+84348301          0.6869               0.2575         0.6638
+84358402          0.4000               0.1625         0.2364
+843786            0.5355               0.1741         0.3985
+         fractal_dimension_worst
+842302                   0.11890
+842517                   0.08902
+84300903                 0.08758
+84348301                 0.17300
+84358402                 0.07678
+843786                   0.12440</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>diagnosis <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(wisc.data<span class="sc">$</span>diagnosis)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#diagnosis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(diagnosis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] M M M M M M
+Levels: B M</code></pre>
+</div>
+</div>
+<p>Now exclude the diagnosis cloumn from the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>wisc.data <span class="ot">&lt;-</span> wisc.data[,<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Q3. How many “dimensions”,“Variables”, “columns”, are in this dataset?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(wisc.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 30</code></pre>
+</div>
+</div>
+<p>#Principal Component Analysis (PCA)</p>
+<p>To perform PCA in R we can use <code>prcomp()</code> function. it takes as input a numeric dataset and optional <code>scale = FALSE/TRUE</code> argument.</p>
+<p>We generally always want to set the <code>scale=TRUE</code> but lets make sure by checking if the mean and standard deviation values are different across these 30 columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">colMeans</span>(wisc.data) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            radius_mean            texture_mean          perimeter_mean 
+                     14                      19                      92 
+              area_mean         smoothness_mean        compactness_mean 
+                    655                       0                       0 
+         concavity_mean     concave.points_mean           symmetry_mean 
+                      0                       0                       0 
+ fractal_dimension_mean               radius_se              texture_se 
+                      0                       0                       1 
+           perimeter_se                 area_se           smoothness_se 
+                      3                      40                       0 
+         compactness_se            concavity_se       concave.points_se 
+                      0                       0                       0 
+            symmetry_se    fractal_dimension_se            radius_worst 
+                      0                       0                      16 
+          texture_worst         perimeter_worst              area_worst 
+                     26                     107                     881 
+       smoothness_worst       compactness_worst         concavity_worst 
+                      0                       0                       0 
+   concave.points_worst          symmetry_worst fractal_dimension_worst 
+                      0                       0                       0 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(wisc.data, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                          PC1    PC2     PC3     PC4     PC5     PC6     PC7
+Standard deviation     3.6444 2.3857 1.67867 1.40735 1.28403 1.09880 0.82172
+Proportion of Variance 0.4427 0.1897 0.09393 0.06602 0.05496 0.04025 0.02251
+Cumulative Proportion  0.4427 0.6324 0.72636 0.79239 0.84734 0.88759 0.91010
+                           PC8    PC9    PC10   PC11    PC12    PC13    PC14
+Standard deviation     0.69037 0.6457 0.59219 0.5421 0.51104 0.49128 0.39624
+Proportion of Variance 0.01589 0.0139 0.01169 0.0098 0.00871 0.00805 0.00523
+Cumulative Proportion  0.92598 0.9399 0.95157 0.9614 0.97007 0.97812 0.98335
+                          PC15    PC16    PC17    PC18    PC19    PC20   PC21
+Standard deviation     0.30681 0.28260 0.24372 0.22939 0.22244 0.17652 0.1731
+Proportion of Variance 0.00314 0.00266 0.00198 0.00175 0.00165 0.00104 0.0010
+Cumulative Proportion  0.98649 0.98915 0.99113 0.99288 0.99453 0.99557 0.9966
+                          PC22    PC23   PC24    PC25    PC26    PC27    PC28
+Standard deviation     0.16565 0.15602 0.1344 0.12442 0.09043 0.08307 0.03987
+Proportion of Variance 0.00091 0.00081 0.0006 0.00052 0.00027 0.00023 0.00005
+Cumulative Proportion  0.99749 0.99830 0.9989 0.99942 0.99969 0.99992 0.99997
+                          PC29    PC30
+Standard deviation     0.02736 0.01153
+Proportion of Variance 0.00002 0.00000
+Cumulative Proportion  1.00000 1.00000</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q4. From your results, what proportion of the original variance is captured by the first principal components (PC1)? 0.4427</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Q5. How many principal components (PCs) are required to describe at least 70% of the original variance in the data? 0.72636</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Q6. How many principal components (PCs) are required to describe at least 90% of the original variance in the data? PC7</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(pca<span class="sc">$</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$dim
+[1] 569  30
+
+$dimnames
+$dimnames[[1]]
+  [1] "842302"    "842517"    "84300903"  "84348301"  "84358402"  "843786"   
+  [7] "844359"    "84458202"  "844981"    "84501001"  "845636"    "84610002" 
+ [13] "846226"    "846381"    "84667401"  "84799002"  "848406"    "84862001" 
+ [19] "849014"    "8510426"   "8510653"   "8510824"   "8511133"   "851509"   
+ [25] "852552"    "852631"    "852763"    "852781"    "852973"    "853201"   
+ [31] "853401"    "853612"    "85382601"  "854002"    "854039"    "854253"   
+ [37] "854268"    "854941"    "855133"    "855138"    "855167"    "855563"   
+ [43] "855625"    "856106"    "85638502"  "857010"    "85713702"  "85715"    
+ [49] "857155"    "857156"    "857343"    "857373"    "857374"    "857392"   
+ [55] "857438"    "85759902"  "857637"    "857793"    "857810"    "858477"   
+ [61] "858970"    "858981"    "858986"    "859196"    "85922302"  "859283"   
+ [67] "859464"    "859465"    "859471"    "859487"    "859575"    "859711"   
+ [73] "859717"    "859983"    "8610175"   "8610404"   "8610629"   "8610637"  
+ [79] "8610862"   "8610908"   "861103"    "8611161"   "8611555"   "8611792"  
+ [85] "8612080"   "8612399"   "86135501"  "86135502"  "861597"    "861598"   
+ [91] "861648"    "861799"    "861853"    "862009"    "862028"    "86208"    
+ [97] "86211"     "862261"    "862485"    "862548"    "862717"    "862722"   
+[103] "862965"    "862980"    "862989"    "863030"    "863031"    "863270"   
+[109] "86355"     "864018"    "864033"    "86408"     "86409"     "864292"   
+[115] "864496"    "864685"    "864726"    "864729"    "864877"    "865128"   
+[121] "865137"    "86517"     "865423"    "865432"    "865468"    "86561"    
+[127] "866083"    "866203"    "866458"    "866674"    "866714"    "8670"     
+[133] "86730502"  "867387"    "867739"    "868202"    "868223"    "868682"   
+[139] "868826"    "868871"    "868999"    "869104"    "869218"    "869224"   
+[145] "869254"    "869476"    "869691"    "86973701"  "86973702"  "869931"   
+[151] "871001501" "871001502" "8710441"   "87106"     "8711002"   "8711003"  
+[157] "8711202"   "8711216"   "871122"    "871149"    "8711561"   "8711803"  
+[163] "871201"    "8712064"   "8712289"   "8712291"   "87127"     "8712729"  
+[169] "8712766"   "8712853"   "87139402"  "87163"     "87164"     "871641"   
+[175] "871642"    "872113"    "872608"    "87281702"  "873357"    "873586"   
+[181] "873592"    "873593"    "873701"    "873843"    "873885"    "874158"   
+[187] "874217"    "874373"    "874662"    "874839"    "874858"    "875093"   
+[193] "875099"    "875263"    "87556202"  "875878"    "875938"    "877159"   
+[199] "877486"    "877500"    "877501"    "877989"    "878796"    "87880"    
+[205] "87930"     "879523"    "879804"    "879830"    "8810158"   "8810436"  
+[211] "881046502" "8810528"   "8810703"   "881094802" "8810955"   "8810987"  
+[217] "8811523"   "8811779"   "8811842"   "88119002"  "8812816"   "8812818"  
+[223] "8812844"   "8812877"   "8813129"   "88143502"  "88147101"  "88147102" 
+[229] "88147202"  "881861"    "881972"    "88199202"  "88203002"  "88206102" 
+[235] "882488"    "88249602"  "88299702"  "883263"    "883270"    "88330202" 
+[241] "88350402"  "883539"    "883852"    "88411702"  "884180"    "884437"   
+[247] "884448"    "884626"    "88466802"  "884689"    "884948"    "88518501" 
+[253] "885429"    "8860702"   "886226"    "886452"    "88649001"  "886776"   
+[259] "887181"    "88725602"  "887549"    "888264"    "888570"    "889403"   
+[265] "889719"    "88995002"  "8910251"   "8910499"   "8910506"   "8910720"  
+[271] "8910721"   "8910748"   "8910988"   "8910996"   "8911163"   "8911164"  
+[277] "8911230"   "8911670"   "8911800"   "8911834"   "8912049"   "8912055"  
+[283] "89122"     "8912280"   "8912284"   "8912521"   "8912909"   "8913"     
+[289] "8913049"   "89143601"  "89143602"  "8915"      "891670"    "891703"   
+[295] "891716"    "891923"    "891936"    "892189"    "892214"    "892399"   
+[301] "892438"    "892604"    "89263202"  "892657"    "89296"     "893061"   
+[307] "89344"     "89346"     "893526"    "893548"    "893783"    "89382601" 
+[313] "89382602"  "893988"    "894047"    "894089"    "894090"    "894326"   
+[319] "894329"    "894335"    "894604"    "894618"    "894855"    "895100"   
+[325] "89511501"  "89511502"  "89524"     "895299"    "8953902"   "895633"   
+[331] "896839"    "896864"    "897132"    "897137"    "897374"    "89742801" 
+[337] "897604"    "897630"    "897880"    "89812"     "89813"     "898143"   
+[343] "89827"     "898431"    "89864002"  "898677"    "898678"    "89869"    
+[349] "898690"    "899147"    "899187"    "899667"    "899987"    "9010018"  
+[355] "901011"    "9010258"   "9010259"   "901028"    "9010333"   "901034301"
+[361] "901034302" "901041"    "9010598"   "9010872"   "9010877"   "901088"   
+[367] "9011494"   "9011495"   "9011971"   "9012000"   "9012315"   "9012568"  
+[373] "9012795"   "901288"    "9013005"   "901303"    "901315"    "9013579"  
+[379] "9013594"   "9013838"   "901549"    "901836"    "90250"     "90251"    
+[385] "902727"    "90291"     "902975"    "902976"    "903011"    "90312"    
+[391] "90317302"  "903483"    "903507"    "903516"    "903554"    "903811"   
+[397] "90401601"  "90401602"  "904302"    "904357"    "90439701"  "904647"   
+[403] "904689"    "9047"      "904969"    "904971"    "905189"    "905190"   
+[409] "90524101"  "905501"    "905502"    "905520"    "905539"    "905557"   
+[415] "905680"    "905686"    "905978"    "90602302"  "906024"    "906290"   
+[421] "906539"    "906564"    "906616"    "906878"    "907145"    "907367"   
+[427] "907409"    "90745"     "90769601"  "90769602"  "907914"    "907915"   
+[433] "908194"    "908445"    "908469"    "908489"    "908916"    "909220"   
+[439] "909231"    "909410"    "909411"    "909445"    "90944601"  "909777"   
+[445] "9110127"   "9110720"   "9110732"   "9110944"   "911150"    "911157302"
+[451] "9111596"   "9111805"   "9111843"   "911201"    "911202"    "9112085"  
+[457] "9112366"   "9112367"   "9112594"   "9112712"   "911296201" "911296202"
+[463] "9113156"   "911320501" "911320502" "9113239"   "9113455"   "9113514"  
+[469] "9113538"   "911366"    "9113778"   "9113816"   "911384"    "9113846"  
+[475] "911391"    "911408"    "911654"    "911673"    "911685"    "911916"   
+[481] "912193"    "91227"     "912519"    "912558"    "912600"    "913063"   
+[487] "913102"    "913505"    "913512"    "913535"    "91376701"  "91376702" 
+[493] "914062"    "914101"    "914102"    "914333"    "914366"    "914580"   
+[499] "914769"    "91485"     "914862"    "91504"     "91505"     "915143"   
+[505] "915186"    "915276"    "91544001"  "91544002"  "915452"    "915460"   
+[511] "91550"     "915664"    "915691"    "915940"    "91594602"  "916221"   
+[517] "916799"    "916838"    "917062"    "917080"    "917092"    "91762702" 
+[523] "91789"     "917896"    "917897"    "91805"     "91813701"  "91813702" 
+[529] "918192"    "918465"    "91858"     "91903901"  "91903902"  "91930402" 
+[535] "919537"    "919555"    "91979701"  "919812"    "921092"    "921362"   
+[541] "921385"    "921386"    "921644"    "922296"    "922297"    "922576"   
+[547] "922577"    "922840"    "923169"    "923465"    "923748"    "923780"   
+[553] "924084"    "924342"    "924632"    "924934"    "924964"    "925236"   
+[559] "925277"    "925291"    "925292"    "925311"    "925622"    "926125"   
+[565] "926424"    "926682"    "926954"    "927241"    "92751"    
+
+$dimnames[[2]]
+ [1] "PC1"  "PC2"  "PC3"  "PC4"  "PC5"  "PC6"  "PC7"  "PC8"  "PC9"  "PC10"
+[11] "PC11" "PC12" "PC13" "PC14" "PC15" "PC16" "PC17" "PC18" "PC19" "PC20"
+[21] "PC21" "PC22" "PC23" "PC24" "PC25" "PC26" "PC27" "PC28" "PC29" "PC30"</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q7. What stands out to you about this plot? Is it easy or difficult to understand? Why?</p>
+</blockquote>
+<p>This is a hot mess of a plot and we will need to generate our own plots to make sense of this PCA result.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pca<span class="sc">$</span>x[,<span class="dv">1</span>], pca<span class="sc">$</span>x[,<span class="dv">2</span>], <span class="at">col=</span> diagnosis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab-8_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data.frame for ggplot</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pca<span class="sc">$</span>x)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>diagnosis <span class="ot">&lt;-</span> diagnosis</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the ggplot2 package</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a scatter plot colored by diagnosis</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(PC1, PC2, <span class="at">col=</span> diagnosis) <span class="sc">+</span> </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab-8_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q8. How much variance is captured in the top 3 PCs.</p>
+</blockquote>
+<p>They capture 72.636% of the total variance.</p>
+<blockquote class="blockquote">
+<p>Q9. For the first principal component, what is the component of the loading vector (i.e.&nbsp;wisc.pr$rotation[,1]) for the feature concave.points_mean?</p>
+</blockquote>
+<p>This tells us how much this original feature contributes to the first PC.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pca<span class="sc">$</span>rotation[<span class="st">"concave.points_mean"</span>,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.2608538</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "sdev"     "rotation" "center"   "scale"    "x"       
+
+$class
+[1] "prcomp"</code></pre>
+</div>
+</div>
+<p>#Combine PCA results with clustering</p>
+<p>We can use our new PCA variables (i.e the scores along the PCs contained in R <code>pca$x</code> ) as input for other methods such as clustering</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Hclust needs a distance matrix as input</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(pca<span class="sc">$</span>x [,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] )</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab-8_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q11. Using the plot() and abline() functions, what is the height at which the clustering model has 4 clusters?</p>
+</blockquote>
+<p>h = 35.5</p>
+<p>To get our cluster membership vector we can use the <code>cutree()</code> function and specify a height (<code>h</code>) or number of groups(<code>k</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>grps <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="at">h=</span><span class="fl">35.5</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(grps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>grps
+  1   2   3   4 
+111  92 216 150 </code></pre>
+</div>
+</div>
+<p>I want to find out how many diagnosis “M” and “B” are in each grp?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diagnosis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>diagnosis
+  B   M 
+357 212 </code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q12. Can you find a better cluster vs diagnoses match by cutting into a different number of clusters between 2 and 10?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diagnosis, grps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         grps
+diagnosis   1   2   3   4
+        B   0  24 184 149
+        M 111  68  32   1</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q13. Which method gives your favorite results for the same data.dist dataset? Explain your reasoning.</p>
+</blockquote>
+<p>We can also plot our results using our clustering vector <code>grps</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pca<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">col=</span>grps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab-8_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data.frame for ggplot</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pca<span class="sc">$</span>x)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>diagnosis <span class="ot">&lt;-</span> diagnosis</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the ggplot2 package</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a scatter plot colored by diagnosis</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> </span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(PC1, PC2, <span class="at">col=</span> grps) <span class="sc">+</span> </span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab-8_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Q. Q15. What is the specificity ( TN/(TN+FN) ) and sensitivity( TP/(TP+FN) ) of our current results?</p>
+</blockquote>
+<p>Specificity= (333/(333+33)) = .91 Sensitivity = (179/(179+33)) = .84</p>
+<div class="cell">
+
+</div>
+<section id="predicition" class="level2">
+<h2 class="anchored" data-anchor-id="predicition">Predicition</h2>
+<blockquote class="blockquote">
+<p>Q16. Which of these new patients should we prioritize for follow up based on your results?</p>
+</blockquote>
+<p>Patient 2 should follow up.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

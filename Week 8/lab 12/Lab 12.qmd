@@ -1,0 +1,194 @@
+---
+title: "Lab 12"
+format: html
+---
+
+```{r}
+countData <- read.csv("airway_scaledcounts.csv", row.names=1)
+metadata <-  read.csv("airway_metadata.csv")
+```
+
+```{r}
+head(countData)
+```
+
+
+```{r}
+head(metadata)
+```
+
+
+>Q1. How many genes are in this dataset?
+
+```{r}
+nrow(countData)
+```
+
+
+>Q2. How many ‘control’ cell lines do we have? 
+
+
+```{r}
+sum(metadata$dex == "control")
+```
+
+```{r}
+control.inds <- metadata$dex == "control"
+```
+
+
+
+(b) Extract all the control columns from `countData` and call it `control.counts`
+
+> Q3. How would you make the above code in either approach more robust?
+
+```{r}
+control.counts <- (countData[ , control.inds])
+```
+
+(c) Calculate the mean value accross the rows of control counts o.e calculate the mean count values for each gene in the control samples
+
+```{r}
+control.means <- rowMeans(control.counts)
+head(control.means)
+```
+
+-Step 2
+Calculate the mean of the treated samples
+
+>Q4. Follow the same procedure for the treated samples (i.e. calculate the mean per gene across drug treated samples and assign to a labeled vector called treated.mean)
+
+```{r}
+treated.mean <- rowMeans (countData[ , metadata$dex == "treated"])
+head(treated.mean)
+```
+
+```{r}
+meancounts <- data.frame(control.means, treated.mean)
+colSums(meancounts)
+```
+
+> Q5 (a). Create a scatter plot showing the mean of the treated samples against the mean of the control samples. Your plot should look something like the following.
+
+```{r}
+plot(meancounts)
+```
+> Q5 (b).You could also use the ggplot2 package to make this figure producing the plot below. What geom_?() function would you use for this plot? 
+
+
+```{r}
+library(ggplot2)
+ggplot(meancounts, aes(x= control.means, y= treated.mean)) +
+  geom_point()
+```
+
+
+>Q6. Try plotting both axes on a log scale. What is the argument to plot() that allows you to do this?
+
+```{r}
+plot(meancounts, log="xy")
+```
+
+
+
+```{r}
+log2(20/20)
+```
+
+```{r}
+log2(20/10)
+```
+
+```{r}
+log2(10/20)
+```
+
+
+```{r}
+log2(40/10)
+```
+
+```{r}
+meancounts$log2fc <- log2(meancounts$treated.mean/meancounts$control.means)
+head(meancounts)
+```
+
+
+
+>Q8. How many genes are up regulated at the common threshold of +2 log2FC values?
+
+```{r}
+sum(meancounts$log2fc >= 2, na.rm=TRUE)
+```
+
+>Q9.Using the down.ind vector above can you determine how many down regulated genes we have at the greater than 2 fc level?
+
+```{r}
+sum(up.ind <- meancounts$log2fc > 2, na.rm=TRUE)
+sum(down.ind <- meancounts$log2fc < (-2), na.rm=TRUE)
+
+```
+> Q10. Do you trust these results? Why or why not?
+
+Yes, I wouldn't trust these results just yet because fold change can be large (e.g. >>two-fold up- or down-regulation) without being statistically significant (e.g. based on p-values). We have not done anything yet to determine whether the differences we are seeing are significant. These results in their current form are likely to be very misleading.
+
+```{r}
+library(DESeq2)
+```
+
+
+To use DESeq we need our input contData and ColData in a specific format that DESeq wants:
+
+
+```{r}
+dds <- DESeqDataSetFromMatrix(countData = countData,
+                       colData = metadata,
+                       design = ~dex)
+```
+
+
+```{r}
+dds <- DESeq(dds)
+```
+
+To get the results out of this `dds` object we can use the `results()` function from the package.
+
+```{r}
+res <- results(dds)
+head(res)
+```
+
+Let's make a final (for today) plot of log2 fold-change vs the adjusted P-value
+
+
+
+```{r}
+plot(res$log2FoldChange, res$padj)
+```
+
+```{r}
+plot(res$log2FoldChange, -log(res$padj))
+abline(v=c(+2, -2), col="blue")
+abline(h=-log(0.05), col="blue")
+```
+
+
+Finally we can make a color vector to use in the plot to better highlight the geners we care about.
+
+```{r}
+mycols <- rep("gray", nrow(res))
+mycols[abs(res$log2FoldChange) >= 2] <- "red"
+mycols[res$padj > 0.05] <- "gray"
+
+plot(res$log2FoldChange, -log(res$padj), col= mycols)
+abline(v=c(+2, -2), col="blue")
+abline(h=-log(0.05), col="blue")
+```
+
+
+
+
+
+
+
+

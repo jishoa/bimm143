@@ -1,0 +1,51 @@
+---
+title: "HOMEWORK 6"
+author: "Joshua Tran"
+date: "2023-05-01"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+
+```{r}
+analyze_protein_drug_interactions <- function(pdb_files, chain = "A", elety = "CA") {
+  # Load required package
+  library(bio3d)
+  
+  # Read and trim PDB files
+  pdb_data <- lapply(pdb_files, function(file) {
+    pdb <- read.pdb(file)
+    trim.pdb(pdb, chain = chain, elety = elety)
+  })
+
+  # Calculate B-factors
+  b_factors <- lapply(pdb_data, function(data) data$atom$b)
+
+  # Define plotting function
+  plot_b_factors <- function(b_factors, sse, main = "", ylab = "Bfactor") {
+    plotb3(b_factors, sse = sse, typ = "l", ylab = ylab, main = main)
+  }
+
+  # Generate plots
+  par(mfrow = c(1, length(b_factors)))
+  for (i in 1:length(b_factors)) {
+    plot_b_factors(b_factors[[i]], sse = pdb_data[[i]], main = paste0("Protein ", i))
+  }
+  
+  return(pdb_data)
+}
+
+```
+
+
+```{r}
+# Define PDB files
+pdb_files <- c("4AKE", "1AKE", "1E4Y")
+
+# Call the function with the specified PDB files
+pdb_data <- analyze_protein_drug_interactions(pdb_files)
+
+```
+

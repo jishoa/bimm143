@@ -1,0 +1,116 @@
+---
+title: "Lab 9"
+format: html
+---
+
+```{r}
+read.csv("/Users/JoshTran/Desktop/BIMM 143/Week 5/Lab 9/Lab 9 Structural Bioinformatics/Data_Export_Summary.csv")
+```
+
+
+```{r}
+
+#xray <- sum(154766, 9083, 8110, 2664, 163, 11)
+#em <- sum(10155, 1802, 3176, 94, 9 ,0 )
+#total <- sum(177403, 10925, 11575, 4223, 204, 22)
+
+#(xray + em )/ total
+
+ 
+xtot <- sum(as.numeric(gsub(',', '' , Data_Export_Summary$X.ray)))
+
+etot <- sum(as.numeric(gsub(',','',Data_Export_Summary$EM))) 
+
+ttot <- sum(as.numeric(gsub(',','', Data_Export_Summary$Total)))
+
+(xtot + etot)/ttot
+```
+
+```{r}
+
+tot <- function(z) {
+  #Take inuput z and remove commas
+    #then make it numeric and then take the sum
+  #Save the sum as y
+  y <- sum(as.numeric(gsub(',', '', z)))
+  #return output
+  return(y)
+}
+  
+Q1 <- 100* (tot(Data_Export_Summary$X.ray) + tot(Data_Export_Summary$EM)) / tot(Data_Export_Summary$Total)
+
+
+xprop <- round(tot(Data_Export_Summary$X.ray) / tot(Data_Export_Summary$Total), 2)
+
+eprop <- round(tot(Data_Export_Summary$EM) / tot(Data_Export_Summary$Total), 2)
+```
+
+
+
+
+
+
+
+
+> Q1: What percentage of structures in the PDB are solved by X-Ray and Electron Microscopy.
+
+```{r}
+total_xray <- colSums(Data_Export_Summary[, c("X-ray")])
+
+xray_percentage <- (total_xray / total_types)*100
+
+xray_percentage
+```
+
+```{r}
+total_em <- colSums(Data_Export_Summary[, c("EM")])
+
+em_percentage <- (total_em / total_types)*100
+
+em_percentage
+```
+
+```{r}
+xray_em_percentage <- xray_percentage + em_percentage
+```
+
+> Q2: What proportion of structures in the PDB are protein?
+
+```{r}
+total_types <- colSums(Data_Export_Summary[, c("Total")])
+
+pdb_percentage <- (Data_Export_Summary[1,8] / total_types)*100
+
+pdb_percentage
+```
+
+> Q3: Type HIV in the PDB website search box on the home page and determine how many HIV-1 protease structures are in the current PDB?
+
+757
+
+> Q4: Water molecules normally have 3 atoms. Why do we see just one atom per water molecule in this structure?
+
+Cause hydrogen molecules are very small, the structure is too low resolution to show H atoms. You need a sub 1 angstrom resolution to see hydrogen
+
+> Q5: There is a critical "conserved" water molecule in the binding site. Can you identify this water molecule? What residue number does this water molecule have
+
+HOH308
+
+> Q6: Generate and save a figure clearly showing the two distinct chains of HIV-protease along with the ligand. You might also consider showing the catalytic residues ASP 25 in each chain and the critical water (we recommend "Ball & Stick" for these side-chains). Add this figure to your Quarto document.
+
+Discussion Topic: Can you think of a way in which indinavir, or even larger ligands and substrates, could enter the binding site?
+
+![HIV-PR structure from MERK with a bound](1HSG.png)
+
+> Q7: \[Optional\] As you have hopefully observed HIV protease is a homodimer (i.e. it is composed of two identical chains). With the aid of the graphic display can you identify secondary structure elements that are likely to only form in the dimer rather than the monomer?
+
+> Q7: How many amino acid residues are there in this pdb object?
+
+198
+
+> Q8: Name one of the two non-protein residues?
+
+Mk1
+> Q9: How many protein chains are in this structure?
+
+2
